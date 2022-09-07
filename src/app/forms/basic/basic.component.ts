@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'basic',
@@ -7,15 +7,25 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class BasicComponent implements OnInit {
   form: FormGroup = new FormGroup({
-    firstname: new FormControl(''),
+    firstname: new FormControl('initial value', { nonNullable: true }),
     lastname: new FormControl(''),
     address: new FormGroup({
       street: new FormControl(''),
       city: new FormControl(''),
       state: new FormControl(''),
-      zip: new FormControl(''),
+      zip: new FormControl(null, {
+        validators: [
+          Validators.minLength(5),
+          Validators.maxLength(5),
+          Validators.pattern('^[0-9]*$'),
+        ],
+      }),
     }),
   });
+
+  get zip() {
+    return this.form.get('address')?.get('zip');
+  }
 
   constructor() {}
 
@@ -29,7 +39,7 @@ export class BasicComponent implements OnInit {
         street: 'Cool Street',
         city: 'Brooklyn',
         state: 'NY',
-        zip: 10000,
+        zip: 22222,
       },
     });
   }
@@ -39,15 +49,6 @@ export class BasicComponent implements OnInit {
   }
 
   onClear() {
-    this.form.reset({
-      firstname: '',
-      lastname: '',
-      address: {
-        street: '',
-        city: '',
-        state: '',
-        zip: '',
-      },
-    });
+    this.form.reset({ lastname: '', address: { street: '', city: '', state: '' } });
   }
 }

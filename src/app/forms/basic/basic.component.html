@@ -24,8 +24,14 @@
         <input type="text" class="form-control form-control-sm rounded-0" id="state" formControlName="state" />
       </div>
       <div class="col pb-4">
-        <label for="zip" class="form-label">zip</label>
-        <input type="text" class="form-control form-control-sm rounded-0" id="zip" formControlName="zip" />
+        <label for="zip" class="form-label">Zip Code</label>
+        <input
+          type="text"
+          class="form-control form-control-sm rounded-0"
+          [ngClass]="{ 'border-danger': zip?.dirty && zip?.errors != undefined }"
+          id="zip"
+          formControlName="zip"
+        />
       </div>
       <div class="row pb-2">
         <div class="col">
