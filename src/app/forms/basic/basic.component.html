@@ -1,0 +1,47 @@
+<div class="row">
+  <form class="col-5" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row pb-2">
+      <div class="col">
+        <label for="firstname" class="form-label">First Name</label>
+        <input type="text" class="form-control form-control-sm rounded-0" id="firstname" formControlName="firstname" />
+      </div>
+      <div class="col">
+        <label for="lastname" class="form-label">Last Name</label>
+        <input type="text" class="form-control form-control-sm rounded-0" id="lastname" formControlName="lastname" />
+      </div>
+    </div>
+    <div formGroupName="address">
+      <div class="col pb-2">
+        <label for="street" class="form-label">Street</label>
+        <input type="text" class="form-control form-control-sm rounded-0" id="street" formControlName="street" />
+      </div>
+      <div class="col pb-2">
+        <label for="city" class="form-label">City</label>
+        <input type="text" class="form-control form-control-sm rounded-0" id="city" formControlName="city" />
+      </div>
+      <div class="col pb-2">
+        <label for="state" class="form-label">State</label>
+        <input type="text" class="form-control form-control-sm rounded-0" id="state" formControlName="state" />
+      </div>
+      <div class="col pb-4">
+        <label for="zip" class="form-label">zip</label>
+        <input type="text" class="form-control form-control-sm rounded-0" id="zip" formControlName="zip" />
+      </div>
+      <div class="row pb-2">
+        <div class="col">
+          <button type="button" class="btn btn-outline-dark btn-sm w-100 rounded-0" (click)="override()">
+            Override
+          </button>
+        </div>
+        <div class="col-6">
+          <button type="button" (click)="onClear()" class="btn btn-outline-danger btn-sm w-100 rounded-0">Clear</button>
+        </div>
+      </div>
+      <div class="col">
+        <button type="submit" [disabled]="!form.valid" class="btn btn-success w-100 rounded-0 mt-2">Submit</button>
+      </div>
+    </div>
+  </form>
+  <div class="col-1"></div>
+  <pre class="col bg bg-light m-0">{{ this.form.value | json }}</pre>
+</div>
