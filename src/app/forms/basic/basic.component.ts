@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'basic',
-  templateUrl: './basic.component.html',
+  templateUrl: './basic.component.html'
 })
 export class BasicComponent implements OnInit {
   form: FormGroup = new FormGroup({
