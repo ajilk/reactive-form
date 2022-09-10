@@ -1,20 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 @Component({
   selector: 'basic',
-  templateUrl: './basic.component.html'
+  templateUrl: './basic.component.html',
 })
 export class BasicComponent implements OnInit {
+  constructor() {
+    this.city?.valueChanges.subscribe((city) => {
+      console.log('only fired when blurred out', city);
+    });
+  }
+  ngOnInit(): void {}
+
   form: FormGroup = new FormGroup({
     firstname: new FormControl('initial value', { nonNullable: true }),
-    lastname: new FormControl(''),
+    lastname: new FormControl('', [Validators.required]),
     address: new FormGroup({
       street: new FormControl(''),
-      city: new FormControl(''),
+      city: new FormControl('', { validators: this.cityValidator('brooklyn'), updateOn: 'blur' }),
       state: new FormControl(''),
       zip: new FormControl(null, {
         validators: [
+          Validators.required,
           Validators.minLength(5),
           Validators.maxLength(5),
           Validators.pattern('^[0-9]*$'),
@@ -27,9 +35,16 @@ export class BasicComponent implements OnInit {
     return this.form.get('address')?.get('zip');
   }
 
-  constructor() {}
+  get city() {
+    return this.form.get('address')?.get('city');
+  }
 
-  ngOnInit(): void {}
+  cityValidator(city: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const allowedCity = (control.value as string).toLowerCase() == city;
+      return !allowedCity ? { city: { value: control.value } } : null;
+    };
+  }
 
   override() {
     this.form.patchValue({

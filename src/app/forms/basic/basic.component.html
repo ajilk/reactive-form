@@ -17,7 +17,21 @@
       </div>
       <div class="col pb-2">
         <label for="city" class="form-label">City</label>
-        <input type="text" class="form-control form-control-sm rounded-0" id="city" formControlName="city" />
+        <div class="input-group">
+          <input
+            [ngClass]="{ 'border border-end-0 border-danger': (city?.dirty || city?.touched) && city?.errors?.['city']}"
+            type="text"
+            class="form-control form-control-sm rounded-0"
+            id="city"
+            formControlName="city"
+          />
+          <span
+            *ngIf="(city?.dirty || city?.touched) && city?.errors?.['city']"
+            class="input-group-text bg-transparent rounded-0 border border-start-0 border-danger"
+          >
+            <i class="fa-solid fa-circle-exclamation text-danger"></i>
+          </span>
+        </div>
       </div>
       <div class="col pb-2">
         <label for="state" class="form-label">State</label>
@@ -32,7 +46,7 @@
           id="zip"
           formControlName="zip"
           numeric
-          [length]=5
+          [length]="5"
         />
       </div>
       <div class="row pb-2">
