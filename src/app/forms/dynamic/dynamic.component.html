@@ -1,0 +1,32 @@
+<div class="row mb-5">
+  <div class="col">
+    <button class="btn btn-outline-dark rounded-0 w-100" (click)="addContact()">add contact</button>
+  </div>
+  <div class="col">
+    <button class="btn btn-outline-dark rounded-0 w-100" (click)="addContact(55555)">add contact (55555)</button>
+  </div>
+  <div class="col">
+    <button class="btn btn-outline-danger rounded-0 w-100" (click)="removeContact()">remove contact</button>
+  </div>
+  <div class="col">
+    <button [disabled]="!form.valid" class="btn btn-success rounded-0 w-100" (click)="onSubmit()">submit</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <form class="py-5" [formGroup]="form">
+      <div class="row mb-3">
+        <div class="col">
+          <label for="color" class="form-label">Color</label>
+          <input type="text" class="form-control form-control-sm rounded-0" id="color" formControlName="color" />
+        </div>
+      </div>
+      <div class="row mb-3" *ngFor="let contact of contacts.controls">
+        <contact class="col" [form]="contact" (delete)="removeContact($event)"></contact>
+      </div>
+    </form>
+  </div>
+  <div class="col">
+    <pre class="col bg bg-light m-0">{{ this.form.value | json }}</pre>
+  </div>
+</div>

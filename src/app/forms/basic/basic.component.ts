@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { CustomValidators } from 'src/app/custom-validators';
 
 @Component({
   selector: 'basic',
@@ -18,7 +19,7 @@ export class BasicComponent implements OnInit {
     lastname: new FormControl('', [Validators.required]),
     address: new FormGroup({
       street: new FormControl(''),
-      city: new FormControl('', { validators: this.cityValidator('brooklyn'), updateOn: 'blur' }),
+      city: new FormControl('', { validators: CustomValidators.CityValidator('brooklyn'), updateOn: 'blur' }),
       state: new FormControl(''),
       zip: new FormControl(null, {
         validators: [
@@ -37,13 +38,6 @@ export class BasicComponent implements OnInit {
 
   get city() {
     return this.form.get('address')?.get('city');
-  }
-
-  cityValidator(city: string): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const allowedCity = (control.value as string).toLowerCase() == city;
-      return !allowedCity ? { city: { value: control.value } } : null;
-    };
   }
 
   override() {

@@ -1,0 +1,29 @@
+<form [formGroup]="form">
+  <div class="row align-items-end">
+    <div class="col">
+      <label for="firstname" class="form-label">First Name</label>
+      <input type="text" class="form-control form-control-sm rounded-0" id="firstname" formControlName="firstname" />
+    </div>
+    <div class="col">
+      <label for="lastname" class="form-label">Last Name</label>
+      <input type="text" class="form-control form-control-sm rounded-0" id="lastname" formControlName="lastname" />
+    </div>
+    <div class="col">
+      <label for="zip" class="form-label">Zip Code</label>
+      <input
+        type="text"
+        class="form-control form-control-sm rounded-0"
+        [ngClass]="{ 'border-danger': zip?.dirty && zip?.errors != undefined }"
+        id="zip"
+        formControlName="zip"
+        numeric
+        [length]="5"
+      />
+    </div>
+    <div class="col-1">
+      <button class="btn btn-outline-danger btn-sm" (click)="onRemove()">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>
+  </div>
+</form>

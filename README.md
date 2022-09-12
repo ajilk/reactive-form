@@ -8,3 +8,8 @@ provide a way to track changes.
 ## Template Driven Form
 - they don't scale as much as reactive form
 - focus on simple scenarios and are not as reusable.
+
+- FormControl
+- FormGroup
+- FormArray
+- FormRecord

@@ -6,12 +6,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BasicComponent } from './forms/basic/basic.component';
 import { NumericDirective } from './directives/numeric.directive';
+import { DynamicComponent } from './forms/dynamic/dynamic.component';
+import { ContactComponent } from './forms/dynamic/contact/contact.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BasicComponent,
-    NumericDirective
+    NumericDirective,
+    DynamicComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
