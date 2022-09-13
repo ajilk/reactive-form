@@ -1,27 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { CustomValidators } from 'src/app/custom-validators';
 import { ContactComponent } from './contact/contact.component';
 import { ContactForm } from './models/ContactForm.model';
 import { SingleSelectOption } from './models/SingleSelectOption.model';
+import { Constants } from './shared/constants';
 
 @Component({
   selector: 'app-dynamic',
   templateUrl: './dynamic.component.html',
 })
 export class DynamicComponent implements OnInit {
-  _cities: SingleSelectOption[] = <SingleSelectOption[]>[
-    { key: 'florida', value: 'Florida', hidden: true },
-    { key: 'chicago', value: 'Chicago' },
-    { key: 'new_york', value: 'New York' },
-    { key: 'california', value: 'California', disabled: true },
-  ];
-  cities = JSON.parse(JSON.stringify(this._cities));
+  cities: SingleSelectOption[] = JSON.parse(JSON.stringify(Constants.Cities));
+  colors: SingleSelectOption[] = Constants.Colors;
   form: FormGroup;
-
-  constructor() {}
+  reset: Subject<boolean> = new Subject();
 
   ngOnInit(): void {
+    this.cities.sort((a, b) => (a.value > b.value ? 1 : -1));
     this.form = new FormGroup(
       {
         city: new FormControl(''),
@@ -32,13 +29,8 @@ export class DynamicComponent implements OnInit {
       },
       { validators: CustomValidators.FieldEqual('city', 'Florida') }
     );
-  }
-
-  toggleCityVisiblity(key: string) {
-    this.cities.forEach((city: SingleSelectOption) => {
-      if (city.key === key) {
-        city.hidden = !city.hidden;
-      }
+    this.color.valueChanges.subscribe((color) => {
+      this.color.setValue(color, { onlySelf: true, emitEvent: false });
     });
   }
 
@@ -54,23 +46,23 @@ export class DynamicComponent implements OnInit {
     return this.form.get('city') as FormControl<string>;
   }
 
-  get invalidControls(): any[] {
-    let invalidControls: any[] = [this.form.errors];
-    Object.keys(this.form.controls).forEach((key) => {
-      let control = this.form.get(key);
-      if (control?.invalid) {
-        invalidControls.push(control.errors);
-      }
-    });
-    return invalidControls;
-  }
-
   addContact(zip?: number): void {
     this.contacts.push(ContactComponent.generateContactForm(Date.now(), zip?.toString()));
   }
 
   removeContact(id?: number): void {
     this.contacts.removeAt(id ? this.contacts.value.findIndex((contact) => contact.id === id) : -1);
+  }
+
+  toggleCityVisiblity(key: string) {
+    const value = Constants.Cities.find((city: SingleSelectOption) => city.key === key)!.value;
+    const idx = this.cities.findIndex((city: SingleSelectOption) => city.key === key);
+    if (idx === -1) {
+      this.cities.push({ key: key, value: value });
+    } else {
+      this.cities.splice(idx, 1);
+    }
+    this.cities.sort((a, b) => (a.value > b.value ? 1 : -1));
   }
 
   toggleCityEnabled(key: string) {
@@ -82,29 +74,17 @@ export class DynamicComponent implements OnInit {
   }
 
   setCity(key: string) {
-    // want
-    // undefined => false
-    // false => false
-    // true => true
-
-    // florida.disabled === true
-    //    undefined === true => false
-    //    false === true => false
-    //    true === true => true
-
-    // florida.disabled === false
-    //    undefined === false => true
-    //    false === false => true
-    //    true === false => false
-
-    //    !(florida.disabled === true || florida.hidden === true)
-
     const city: SingleSelectOption = this.cities.filter((city: SingleSelectOption) => city.key === key)[0];
-    const disabled: boolean = city.disabled === undefined ? false : city.disabled;
-    const hidden: boolean = city.hidden === undefined ? false : city.hidden;
-    if (!hidden && !disabled) {
-      this.city.setValue(city.value);
+    if (city) {
+      const disabled: boolean = city.disabled === undefined ? false : city.disabled;
+      if (!disabled) {
+        this.city.setValue(city.value);
+      }
     }
+  }
+
+  resetDropdowns() {
+    this.reset.next(true);
   }
 
   onSubmit(): void {

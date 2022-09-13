@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnChanges, Provider } from '@angular/core';
+import { Component, forwardRef, Input, Provider } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -6,6 +6,7 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors,
 } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { SingleSelectOption } from '../../models/SingleSelectOption.model';
 
 const SINGLE_SELECT_VALUE_ACCESSOR: Provider = {
@@ -28,17 +29,21 @@ const SINGLE_SELECT_VALIDATORS: Provider = {
 export class SingleSelectComponent implements ControlValueAccessor {
   @Input() options: SingleSelectOption[];
   @Input() default: SingleSelectOption = { key: 'select_dropdown', value: 'Select Dropdown' };
+  @Input() reset: Subject<boolean> = new Subject();
 
-  option: SingleSelectOption;
+  option: SingleSelectOption | undefined;
   disabled: boolean;
   onChanged: any = () => {};
   onTouched: any = () => {};
 
+  ngOnInit() {
+    this.reset.subscribe(() => this.setOption(undefined));
+  }
+
   writeValue(value: string): void {
     const option = this.options.filter((option) => {
       const disabled = option.disabled === undefined ? false : option.disabled;
-      const hidden = option.hidden === undefined ? false : option.hidden;
-      return option.value == value && !disabled && !hidden;
+      return option.value == value && !disabled;
     })[0];
     if (option) {
       this.option = option;
@@ -61,10 +66,10 @@ export class SingleSelectComponent implements ControlValueAccessor {
     return null;
   }
 
-  setOption(option: SingleSelectOption) {
+  setOption(option?: SingleSelectOption) {
     if (!this.disabled) {
       this.option = option;
-      this.onChanged(this.option.value);
+      this.onChanged(this.option ? this.option.value : '');
       this.onTouched();
     }
   }

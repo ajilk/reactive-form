@@ -1,7 +1,4 @@
 <div class="row mb-2">
-  <pre> {{ invalidControls | json }} </pre>
-</div>
-<div class="row mb-2">
   <div class="col">
     <button class="btn btn-outline-dark rounded-0 w-100" (click)="addContact()">add contact</button>
   </div>
@@ -32,6 +29,9 @@
   <div class="col">
     <button class="btn btn-outline-dark rounded-0 w-100" (click)="setCity('california')">Set City to California</button>
   </div>
+  <div class="col">
+    <button class="btn btn-outline-dark rounded-0 w-100" (click)="resetDropdowns()">reset dropdowns</button>
+  </div>
 </div>
 <div class="row py-5">
   <div class="col">
@@ -48,17 +48,13 @@
         </div>
         <div class="col">
           <label for="color" class="form-label">Same Color</label>
-          <input
-            type="text"
-            class="form-control form-control-sm rounded-0"
-            formControlName="color"
-            [value]="color.value"
-          />
+          <single-select formControlName="color" [options]="colors" [reset]="reset"></single-select>
         </div>
       </div>
       <div class="row mb-3">
+        <label for="city" class="form-label">City</label>
         <div class="col">
-          <single-select formControlName="city" [options]="cities"></single-select>
+          <single-select formControlName="city" [options]="cities" [reset]="reset"></single-select>
         </div>
       </div>
       <div class="row mb-3" *ngFor="let contact of contacts.controls">
