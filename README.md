@@ -13,3 +13,11 @@ provide a way to track changes.
 - FormGroup
 - FormArray
 - FormRecord
+
+The purpose of writeValue is to inform your component about changes on the parent component. What you'll usually want to do with it is to bind the change from outside to a local variable.
+
+In order to inform the outside world about changes inside of your component, you need to call the onChange method. You can call it, like you would usually call an event emitter.
+
+References:
+https://angular.io/guide/forms-overview
+https://indepth.dev/posts/1143/a-thorough-exploration-of-angular-forms

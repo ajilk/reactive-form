@@ -1,0 +1,16 @@
+<div class="dropdown">
+  <button class="btn btn-outline-dark dropdown-toggle rounded-0 w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    {{ option ? option.value : default.value }}
+  </button>
+  <ul class="dropdown-menu w-100">
+    <li *ngFor="let option of options">
+      <a
+        *ngIf="!option.hidden"
+        class="dropdown-item"
+        [ngClass]="{ disabled: option.disabled }"
+        (click)="setOption(option)"
+        >{{ option.value }}</a
+      >
+    </li>
+  </ul>
+</div>

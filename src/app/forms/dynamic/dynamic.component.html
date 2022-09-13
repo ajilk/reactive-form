@@ -1,4 +1,7 @@
-<div class="row mb-5">
+<div class="row mb-2">
+  <pre> {{ invalidControls | json }} </pre>
+</div>
+<div class="row mb-2">
   <div class="col">
     <button class="btn btn-outline-dark rounded-0 w-100" (click)="addContact()">add contact</button>
   </div>
@@ -12,13 +15,50 @@
     <button [disabled]="!form.valid" class="btn btn-success rounded-0 w-100" (click)="onSubmit()">submit</button>
   </div>
 </div>
-<div class="row">
+<div class="row mb-2">
   <div class="col">
-    <form class="py-5" [formGroup]="form">
+    <button class="btn btn-outline-dark rounded-0 w-100" (click)="toggleCityVisiblity('florida')">
+      toggle visiblity (florida)
+    </button>
+  </div>
+  <div class="col">
+    <button class="btn btn-outline-dark rounded-0 w-100" (click)="toggleCityEnabled('california')">
+      toggle enable (california)
+    </button>
+  </div>
+  <div class="col">
+    <button class="btn btn-outline-dark rounded-0 w-100" (click)="setCity('florida')">Set City to Florida</button>
+  </div>
+  <div class="col">
+    <button class="btn btn-outline-dark rounded-0 w-100" (click)="setCity('california')">Set City to California</button>
+  </div>
+</div>
+<div class="row py-5">
+  <div class="col">
+    <form [formGroup]="form">
       <div class="row mb-3">
         <div class="col">
           <label for="color" class="form-label">Color</label>
-          <input type="text" class="form-control form-control-sm rounded-0" id="color" formControlName="color" />
+          <input
+            type="text"
+            class="form-control form-control-sm rounded-0"
+            formControlName="color"
+            [value]="color.value"
+          />
+        </div>
+        <div class="col">
+          <label for="color" class="form-label">Same Color</label>
+          <input
+            type="text"
+            class="form-control form-control-sm rounded-0"
+            formControlName="color"
+            [value]="color.value"
+          />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <single-select formControlName="city" [options]="cities"></single-select>
         </div>
       </div>
       <div class="row mb-3" *ngFor="let contact of contacts.controls">

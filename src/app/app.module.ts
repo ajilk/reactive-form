@@ -8,21 +8,12 @@ import { BasicComponent } from './forms/basic/basic.component';
 import { NumericDirective } from './directives/numeric.directive';
 import { DynamicComponent } from './forms/dynamic/dynamic.component';
 import { ContactComponent } from './forms/dynamic/contact/contact.component';
+import { SingleSelectComponent } from './forms/dynamic/shared/single-select/single-select.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BasicComponent,
-    NumericDirective,
-    DynamicComponent,
-    ContactComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-  ],
+  declarations: [AppComponent, BasicComponent, NumericDirective, DynamicComponent, ContactComponent, SingleSelectComponent],
+  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
