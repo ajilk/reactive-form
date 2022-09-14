@@ -16,6 +16,7 @@ export class DynamicComponent implements OnInit {
   colors: SingleSelectOption[] = Constants.Colors;
   form: FormGroup;
   reset: Subject<boolean> = new Subject();
+  readonly: boolean = false;
 
   ngOnInit(): void {
     this.cities.sort((a, b) => (a.value > b.value ? 1 : -1));
@@ -32,6 +33,8 @@ export class DynamicComponent implements OnInit {
     this.color.valueChanges.subscribe((color) => {
       this.color.setValue(color, { onlySelf: true, emitEvent: false });
     });
+
+    this.city.setValue('Chicago');
   }
 
   get contacts(): FormArray<FormGroup<ContactForm>> {
@@ -83,8 +86,19 @@ export class DynamicComponent implements OnInit {
     }
   }
 
+  toggleDropdownEnable(formControlName: string) {
+    const control = this.form.get(formControlName);
+    const disabled = control?.disabled;
+    disabled ? control.enable() : control?.disable();
+  }
+
+  toggleDropdownReadonly() {
+    this.readonly = !this.readonly;
+  }
+
   resetDropdowns() {
-    this.reset.next(true);
+    // this.reset.next(true);
+    this.city.reset('');
   }
 
   onSubmit(): void {

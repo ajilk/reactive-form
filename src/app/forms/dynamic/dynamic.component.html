@@ -24,6 +24,18 @@
     </button>
   </div>
   <div class="col">
+    <button class="btn btn-outline-dark rounded-0 w-100" (click)="toggleDropdownReadonly()">
+      toggle dropdown readonly
+    </button>
+  </div>
+  <div class="col">
+    <button class="btn btn-outline-dark rounded-0 w-100" (click)="toggleDropdownEnable('city')">
+      toggle dropdown enable
+    </button>
+  </div>
+</div>
+<div class="row mb-2">
+  <div class="col">
     <button class="btn btn-outline-dark rounded-0 w-100" (click)="setCity('florida')">Set City to Florida</button>
   </div>
   <div class="col">
@@ -48,17 +60,22 @@
         </div>
         <div class="col">
           <label for="color" class="form-label">Same Color</label>
-          <single-select formControlName="color" [options]="colors" [reset]="reset"></single-select>
+          <single-select formControlName="color" [options]="colors"></single-select>
         </div>
       </div>
       <div class="row mb-3">
-        <label for="city" class="form-label">City</label>
         <div class="col">
-          <single-select formControlName="city" [options]="cities" [reset]="reset"></single-select>
+          <single-select formControlName="city" label="City" [options]="cities" [readonly]="readonly"></single-select>
         </div>
       </div>
-      <div class="row mb-3" *ngFor="let contact of contacts.controls">
-        <contact class="col" [form]="contact" (delete)="removeContact($event)"></contact>
+      <div style="overflow: auto; max-height: 100px">
+        <contact
+          class="row py-3 my-3 bg-info"
+          *ngFor="let contact of contacts.controls; let i = index"
+          [ngClass]="{ 'bg-opacity-10': i % 2 == 0, 'bg-opacity-25': i % 2 != 0 }"
+          [form]="contact"
+          (delete)="removeContact($event)"
+        ></contact>
       </div>
     </form>
   </div>

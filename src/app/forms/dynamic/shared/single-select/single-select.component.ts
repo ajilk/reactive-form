@@ -6,7 +6,6 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors,
 } from '@angular/forms';
-import { Subject } from 'rxjs';
 import { SingleSelectOption } from '../../models/SingleSelectOption.model';
 
 const SINGLE_SELECT_VALUE_ACCESSOR: Provider = {
@@ -28,25 +27,27 @@ const SINGLE_SELECT_VALIDATORS: Provider = {
 })
 export class SingleSelectComponent implements ControlValueAccessor {
   @Input() options: SingleSelectOption[];
-  @Input() default: SingleSelectOption = { key: 'select_dropdown', value: 'Select Dropdown' };
-  @Input() reset: Subject<boolean> = new Subject();
+  @Input() label: string;
+  @Input() readonly: boolean = false;
 
   option: SingleSelectOption | undefined;
   disabled: boolean;
   onChanged: any = () => {};
   onTouched: any = () => {};
 
-  ngOnInit() {
-    this.reset.subscribe(() => this.setOption(undefined));
-  }
+  ngOnInit() {}
 
   writeValue(value: string): void {
-    const option = this.options.filter((option) => {
-      const disabled = option.disabled === undefined ? false : option.disabled;
-      return option.value == value && !disabled;
-    })[0];
-    if (option) {
-      this.option = option;
+    if (value) {
+      const option = this.options.filter((option) => {
+        const disabled = option.disabled === undefined ? false : option.disabled;
+        return option.value == value && !disabled;
+      })[0];
+      if (option) {
+        this.option = option;
+      }
+    } else {
+      this.option = undefined;
     }
   }
 

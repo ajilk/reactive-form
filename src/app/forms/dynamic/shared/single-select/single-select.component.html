@@ -1,5 +1,7 @@
-<div class="dropdown">
+<div *ngIf="!disabled" class="dropdown">
+  <label *ngIf="label" [for]="label" class="form-label">{{ label }}</label>
   <button
+    [ngClass]="{ disabled: readonly }"
     class="btn btn-outline-dark btn-sm dropdown-toggle rounded-0 w-100"
     type="button"
     data-bs-toggle="dropdown"
@@ -9,12 +11,9 @@
   </button>
   <ul class="dropdown-menu w-100">
     <li *ngFor="let option of options">
-      <a
-        class="dropdown-item"
-        [ngClass]="{ disabled: option.disabled }"
-        (click)="setOption(option)"
-        >{{ option.value }}</a
-      >
+      <a class="dropdown-item" [ngClass]="{ disabled: option.disabled }" (click)="setOption(option)">{{
+        option.value
+      }}</a>
     </li>
   </ul>
 </div>
