@@ -13,6 +13,7 @@ export class OrderComponent implements OnInit {
   @Input() order: FormGroup;
   @Output() delete: EventEmitter<number> = new EventEmitter();
   @Output() checked: EventEmitter<{ id: number; value: boolean }> = new EventEmitter();
+  @Output() duplicate: EventEmitter<number> = new EventEmitter();
 
   detailLayerVisible: boolean = false;
 
@@ -36,6 +37,10 @@ export class OrderComponent implements OnInit {
 
   onSelect(id: number, event: Event) {
     this.checked.emit({ id: id, value: (event.target as HTMLInputElement).checked });
+  }
+
+  onDuplicate(id: number) {
+    this.duplicate.emit(id);
   }
 
   static generateOrderForm(defaultValue: {

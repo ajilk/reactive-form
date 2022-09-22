@@ -9,7 +9,12 @@
     <div class="col-2">
       <div class="row">
         <div class="col-auto py-0 align-self-center pe-0">
-          <input class="form-check-input mt-0" style="height: 25px; width: 25px" type="checkbox" (change)="onSelect(id.value, $event)"/>
+          <input
+            class="form-check-input mt-0"
+            style="height: 25px; width: 25px"
+            type="checkbox"
+            (change)="onSelect(id.value, $event)"
+          />
         </div>
         <div class="col">
           <single-select formControlName="side" [options]="Constants.Sides"></single-select>
@@ -25,16 +30,27 @@
       <input type="text" class="form-control form-control-sm rounded-0" id="account" formControlName="account" />
     </div>
     <div class="col"></div>
-    <div class="col-auto">
-      <button class="btn btn-outline-danger btn-sm w-100 mb-2" (click)="this.delete.emit(id.value)">
-        <i class="fa-solid fa-trash"></i>
-      </button>
-      <button class="btn btn-outline-dark btn-sm w-100" (click)="detailLayerVisible = !detailLayerVisible">
-        <i
-          class="fa-solid fa-1x"
-          [ngClass]="{ 'fa-caret-down': !detailLayerVisible, 'fa-caret-up': detailLayerVisible }"
-        ></i>
-      </button>
+    <div class="col-3">
+      <div class="row">
+        <div class="col-4">
+          <button class="btn btn-outline-danger btn-sm w-100" (click)="this.delete.emit(id.value)">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+        <div class="col-4">
+          <button class="btn btn-outline-dark btn-sm w-100" (click)="onDuplicate(id.value)">
+            <i class="fa-regular fa-copy"></i>
+          </button>
+        </div>
+        <div class="col-4">
+          <button class="btn btn-outline-dark btn-sm w-100" (click)="detailLayerVisible = !detailLayerVisible">
+            <i
+              class="fa-solid fa-1x"
+              [ngClass]="{ 'fa-caret-down': !detailLayerVisible, 'fa-caret-up': detailLayerVisible }"
+            ></i>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   <div *ngIf="detailLayerVisible" class="row">

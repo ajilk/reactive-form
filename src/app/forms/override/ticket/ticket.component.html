@@ -35,6 +35,7 @@
               [order]="order"
               (delete)="removeOrder($event)"
               (checked)="checkedOrder($event)"
+              (duplicate)="onDuplicate($event)"
             ></order>
             <div class="row py-2">
               <button class="btn btn-outline-success rounded-0 w-100" (click)="addOrder()">add order</button>

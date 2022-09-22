@@ -65,6 +65,17 @@ export class TicketComponent implements OnInit {
     this.batchCusipValue = '';
   }
 
+  onDuplicate(id: number) {
+    const idx: number = this.orders.value.findIndex((order) => order.id === id);
+    const order: FormGroup = this.orders.at(idx);
+    const copy = OrderComponent.generateOrderForm({
+      account: order.get('account')?.value,
+      cusip: order.get('cusip')?.value,
+      side: order.get('side')?.value,
+    });
+    this.orders.insert(idx + 1, copy);
+  }
+
   addOrder() {
     this.orders.push(OrderComponent.generateOrderForm({ cusip: undefined, account: this.account, side: this.side }));
   }
