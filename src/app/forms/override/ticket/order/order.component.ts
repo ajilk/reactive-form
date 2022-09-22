@@ -12,6 +12,7 @@ export class OrderComponent implements OnInit {
 
   @Input() order: FormGroup;
   @Output() delete: EventEmitter<number> = new EventEmitter();
+  @Output() checked: EventEmitter<{ id: number; value: boolean }> = new EventEmitter();
 
   detailLayerVisible: boolean = false;
 
@@ -31,6 +32,10 @@ export class OrderComponent implements OnInit {
 
   get id(): FormControl {
     return this.order.get('id') as FormControl;
+  }
+
+  onSelect(id: number, event: Event) {
+    this.checked.emit({ id: id, value: (event.target as HTMLInputElement).checked });
   }
 
   static generateOrderForm(defaultValue: {

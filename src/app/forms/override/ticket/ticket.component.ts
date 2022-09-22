@@ -16,6 +16,10 @@ export class TicketComponent implements OnInit {
   form: FormGroup;
   constructor() {}
 
+  batchAccountValue: string;
+  batchCusipValue: string;
+  checkedOrders: Set<number> = new Set();
+
   get orders(): FormArray<FormGroup> {
     return this.form.get('orders') as FormArray;
   }
@@ -26,7 +30,39 @@ export class TicketComponent implements OnInit {
           return OrderComponent.generateOrderForm({ cusip: cusip, account: this.account, side: this.side });
         })
       : [];
-    this.form = new FormGroup({ orders: new FormArray(orders) });
+    this.form = new FormGroup({
+      orders: new FormArray(orders),
+    });
+  }
+
+  overrideAccount() {
+    if (this.checkedOrders.size > 0) {
+      this.orders.controls.forEach((order) => {
+        if (this.checkedOrders.has(order.get('id')?.value)) {
+          order.get('account')?.setValue(this.batchAccountValue);
+        }
+      });
+    } else {
+      this.orders.controls.forEach((order) => {
+        order.get('account')?.setValue(this.batchAccountValue);
+      });
+    }
+    this.batchAccountValue = '';
+  }
+
+  overrideCusip() {
+    if (this.checkedOrders.size > 0) {
+      this.orders.controls.forEach((order) => {
+        if (this.checkedOrders.has(order.get('id')?.value)) {
+          order.get('cusip')?.setValue(this.batchCusipValue);
+        }
+      });
+    } else {
+      this.orders.controls.forEach((order) => {
+        order.get('cusip')?.setValue(this.batchCusipValue);
+      });
+    }
+    this.batchCusipValue = '';
   }
 
   addOrder() {
@@ -35,6 +71,15 @@ export class TicketComponent implements OnInit {
 
   removeOrder(id: number) {
     this.orders.removeAt(this.orders.value.findIndex((o) => o.id === id));
+  }
+
+  checkedOrder(event: { id: number; value: boolean }) {
+    console.log(event);
+    if (event.value) {
+      this.checkedOrders.add(event.id);
+    } else {
+      this.checkedOrders.delete(event.id);
+    }
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {

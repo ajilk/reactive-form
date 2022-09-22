@@ -6,10 +6,36 @@
         <h5 class="modal-title">ticket</h5>
         <button type="button" class="btn-close" (click)="this.close.emit()"></button>
       </div>
-      <div class="modal-body" style="min-height: 50vh; max-height: 50vh">
+      <div class="modal-body pt-0" style="min-height: 50vh; max-height: 50vh">
         <div class="row">
           <div class="col">
-            <order *ngFor="let order of orders.controls" [order]="order" (delete)="removeOrder($event)"></order>
+            <div class="row align-items-end pt-2 pb-4 mb-3 bg-light sticky-top">
+              <div class="col">
+                <label for="account" class="form-label">account</label>
+                <input type="text" class="form-control form-control-sm rounded-0" [(ngModel)]="batchAccountValue" />
+              </div>
+              <div class="col">
+                <button class="btn btn-outline-success btn-sm rounded-0 w-100" (click)="overrideAccount()">
+                  override account
+                </button>
+              </div>
+              <div class="col">
+                <label for="cusip" class="form-label">cusip</label>
+                <input type="text" class="form-control form-control-sm rounded-0" [(ngModel)]="batchCusipValue" />
+              </div>
+              <div class="col">
+                <button class="btn btn-outline-success btn-sm rounded-0 w-100" (click)="overrideCusip()">
+                  override cusip
+                </button>
+              </div>
+            </div>
+            <order
+              class="py-2"
+              *ngFor="let order of orders.controls"
+              [order]="order"
+              (delete)="removeOrder($event)"
+              (checked)="checkedOrder($event)"
+            ></order>
             <div class="row py-2">
               <button class="btn btn-outline-success rounded-0 w-100" (click)="addOrder()">add order</button>
             </div>
