@@ -1,4 +1,4 @@
-import { SingleSelectOption } from '../models/SingleSelectOption.model';
+import { SingleSelectOption } from '../shared/single-select/SingleSelectOption.model';
 
 export class Constants {
   static Cities: SingleSelectOption[] = <SingleSelectOption[]>[

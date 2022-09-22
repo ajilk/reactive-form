@@ -6,7 +6,7 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors,
 } from '@angular/forms';
-import { SingleSelectOption } from '../../models/SingleSelectOption.model';
+import { SingleSelectOption } from './SingleSelectOption.model';
 
 const SINGLE_SELECT_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,

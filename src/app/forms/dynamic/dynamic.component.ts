@@ -4,8 +4,8 @@ import { Subject } from 'rxjs';
 import { CustomValidators } from 'src/app/custom-validators';
 import { ContactComponent } from './contact/contact.component';
 import { ContactForm } from './models/ContactForm.model';
-import { SingleSelectOption } from './models/SingleSelectOption.model';
-import { Constants } from './shared/constants';
+import { SingleSelectOption } from '../shared/single-select/SingleSelectOption.model';
+import { Constants } from '../shared/constants';
 
 @Component({
   selector: 'app-dynamic',

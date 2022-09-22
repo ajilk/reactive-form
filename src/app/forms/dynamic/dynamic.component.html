@@ -68,7 +68,7 @@
           <single-select formControlName="city" label="City" [options]="cities" [readonly]="readonly"></single-select>
         </div>
       </div>
-      <div style="overflow: auto; max-height: 100px">
+      <div>
         <contact
           class="row py-3 my-3 bg-info"
           *ngFor="let contact of contacts.controls; let i = index"

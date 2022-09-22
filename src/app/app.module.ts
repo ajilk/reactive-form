@@ -8,7 +8,7 @@ import { BasicComponent } from './forms/basic/basic.component';
 import { NumericDirective } from './directives/numeric.directive';
 import { DynamicComponent } from './forms/dynamic/dynamic.component';
 import { ContactComponent } from './forms/dynamic/contact/contact.component';
-import { SingleSelectComponent } from './forms/dynamic/shared/single-select/single-select.component';
+import { SingleSelectComponent } from './forms/shared/single-select/single-select.component';
 
 @NgModule({
   declarations: [AppComponent, BasicComponent, NumericDirective, DynamicComponent, ContactComponent, SingleSelectComponent],
