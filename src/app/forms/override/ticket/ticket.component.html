@@ -9,7 +9,10 @@
       <div class="modal-body" style="min-height: 50vh; max-height: 50vh">
         <div class="row">
           <div class="col">
-            <order *ngFor="let order of orders.controls" [order]="order"></order>
+            <order *ngFor="let order of orders.controls" [order]="order" (delete)="removeOrder($event)"></order>
+            <div class="row py-2">
+              <button class="btn btn-outline-success rounded-0 w-100" (click)="addOrder()">add order</button>
+            </div>
           </div>
           <div class="col-4">
             <pre>{{ form.value | json }}</pre>

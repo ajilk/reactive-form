@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Constants } from 'src/app/forms/shared/constants';
-import { SingleSelectOption } from 'src/app/forms/shared/single-select/SingleSelectOption.model';
 
 @Component({
   selector: 'order',
@@ -12,8 +11,11 @@ export class OrderComponent implements OnInit {
   Constants = Constants;
 
   @Input() order: FormGroup;
+  @Output() delete: EventEmitter<number> = new EventEmitter();
+
+  detailLayerVisible: boolean = false;
+
   ngOnInit(): void {}
-  showDetailLayer: boolean = false;
 
   get cusip(): FormControl {
     return this.order.get('cusip') as FormControl;
@@ -27,11 +29,20 @@ export class OrderComponent implements OnInit {
     return this.order.get('side') as FormControl;
   }
 
-  static generateOrderForm(cusip: string, account: string, side: 'buy' | 'sell' | undefined) {
+  get id(): FormControl {
+    return this.order.get('id') as FormControl;
+  }
+
+  static generateOrderForm(defaultValue: {
+    cusip: string | undefined;
+    account: string;
+    side: 'buy' | 'sell' | undefined;
+  }) {
     return new FormGroup({
-      cusip: new FormControl(cusip),
-      account: new FormControl(account),
-      side: new FormControl(side === undefined ? 'buy' : side),
+      id: new FormControl(Date.now()),
+      cusip: new FormControl(defaultValue.cusip),
+      account: new FormControl(defaultValue.account),
+      side: new FormControl(defaultValue.side === undefined ? 'buy' : defaultValue.side),
     });
   }
 }

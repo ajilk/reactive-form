@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { OrderComponent } from './order/order.component';
 
 @Component({
@@ -21,13 +21,20 @@ export class TicketComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      orders: new FormArray(
-        this.cusips.map((cusip) => {
-          return OrderComponent.generateOrderForm(cusip, this.account, this.side);
+    let orders: FormGroup[] = this.cusips
+      ? this.cusips.map((cusip) => {
+          return OrderComponent.generateOrderForm({ cusip: cusip, account: this.account, side: this.side });
         })
-      ),
-    });
+      : [];
+    this.form = new FormGroup({ orders: new FormArray(orders) });
+  }
+
+  addOrder() {
+    this.orders.push(OrderComponent.generateOrderForm({ cusip: undefined, account: this.account, side: this.side }));
+  }
+
+  removeOrder(id: number) {
+    this.orders.removeAt(this.orders.value.findIndex((o) => o.id === id));
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {

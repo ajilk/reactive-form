@@ -7,7 +7,6 @@
     }"
   >
     <div class="col-2">
-      <label class="text-muted label">{{ cusip.value }}</label>
       <div class="row">
         <div class="col-auto py-0 align-self-center pe-0">
           <input class="form-check-input mt-0" style="height: 25px; width: 25px" type="checkbox" />
@@ -27,15 +26,20 @@
     </div>
     <div class="col"></div>
     <div class="col-auto">
-      <button class="btn btn-outline-danger btn-sm w-100 mb-2">
+      <button class="btn btn-outline-danger btn-sm w-100 mb-2" (click)="this.delete.emit(id.value)">
         <i class="fa-solid fa-trash"></i>
       </button>
-      <button class="btn btn-outline-dark btn-sm w-100" (click)="showDetailLayer = !showDetailLayer">
-        <i class="fa-solid fa-caret-down"></i>
+      <button class="btn btn-outline-dark btn-sm w-100" (click)="detailLayerVisible = !detailLayerVisible">
+        <i
+          class="fa-solid fa-1x"
+          [ngClass]="{ 'fa-caret-down': !detailLayerVisible, 'fa-caret-up': detailLayerVisible }"
+        ></i>
       </button>
     </div>
   </div>
-  <div *ngIf="showDetailLayer" class="row">
-    <div class="bg-light bg-opacity-50 py-3" style="min-height: 10rem">asdf</div>
+  <div *ngIf="detailLayerVisible" class="row">
+    <div class="bg-light bg-opacity-50 py-3" style="min-height: 10rem">
+      <pre>{{ order.value | json }}</pre>
+    </div>
   </div>
 </form>
