@@ -1,0 +1,24 @@
+<div class="modal vh-100" tabindex="-1" aria-hidden="true">
+  <div class="modal-backdrop vh-100"></div>
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content rounded-0">
+      <div class="modal-header">
+        <h5 class="modal-title">ticket</h5>
+        <button type="button" class="btn-close" (click)="this.close.emit()"></button>
+      </div>
+      <div class="modal-body" style="min-height: 50vh; max-height: 50vh">
+        <div class="row">
+          <div class="col">
+            <order *ngFor="let order of orders.controls" [order]="order"></order>
+          </div>
+          <div class="col-4">
+            <pre>{{ form.value | json }}</pre>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">submit</button>
+      </div>
+    </div>
+  </div>
+</div>

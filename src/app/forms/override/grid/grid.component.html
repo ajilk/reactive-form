@@ -1,0 +1,32 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col" style="width: 2%"></th>
+      <th scope="col" style="width: 10%"></th>
+      <th scope="col" style="width: 10%"></th>
+      <th scope="col">cusip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cusip of rows; let i = index">
+      <td class="align-middle">
+        <input
+          class="form-check-input mt-0"
+          style="height: 25px; width: 25px"
+          type="checkbox"
+          value=""
+          aria-label="Checkbox for following text input"
+          id="{{ i }}"
+          (change)="onSelect(i, $event)"
+        />
+      </td>
+      <td>
+        <button class="btn btn-primary w-100" (click)="onAction('buy', i)">buy</button>
+      </td>
+      <td>
+        <button class="btn btn-danger w-100" (click)="onAction('sell', i)">sell</button>
+      </td>
+      <td>{{ cusip }}</td>
+    </tr>
+  </tbody>
+</table>

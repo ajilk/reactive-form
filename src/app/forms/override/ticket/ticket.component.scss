@@ -1,0 +1,12 @@
+.modal {
+  display: block;
+}
+
+.modal-backdrop {
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.modal-xl {
+  --bs-modal-width: 75%;
+}

@@ -1,0 +1,18 @@
+<div class="py-3">
+  <grid [rows]="cusips" (selectionChanged)="onSelectionChange($event)" (action)="onAction($event)"></grid>
+</div>
+<div class="row">
+  <div class="col">
+    <input type="text" class="form-control" placeholder="account" [(ngModel)]="account" />
+  </div>
+  <div class="col">
+    <button class="btn btn-outline-dark w-100" (click)="onOpenTicket()">launch ticket</button>
+  </div>
+</div>
+<ticket
+  *ngIf="ticketVisible"
+  (close)="onModalEvent('close')"
+  [account]="account"
+  [cusips]="input"
+  [side]="side"
+></ticket>

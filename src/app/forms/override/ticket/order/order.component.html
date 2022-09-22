@@ -1,0 +1,41 @@
+<form [formGroup]="order">
+  <div
+    class="row py-2 bg-gradient bg-opacity-10 border-start border-5 align-items-end"
+    [ngClass]="{
+      'bg-primary border-primary': side.value == 'buy',
+      'bg-danger border-danger': side.value == 'sell'
+    }"
+  >
+    <div class="col-2">
+      <label class="text-muted label">{{ cusip.value }}</label>
+      <div class="row">
+        <div class="col-auto py-0 align-self-center pe-0">
+          <input class="form-check-input mt-0" style="height: 25px; width: 25px" type="checkbox" />
+        </div>
+        <div class="col">
+          <single-select formControlName="side" [options]="Constants.Sides"></single-select>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <label for="cusip" class="form-label">cusip</label>
+      <input type="text" class="form-control form-control-sm rounded-0" id="account" formControlName="cusip" />
+    </div>
+    <div class="col-2">
+      <label for="account" class="form-label">account</label>
+      <input type="text" class="form-control form-control-sm rounded-0" id="account" formControlName="account" />
+    </div>
+    <div class="col"></div>
+    <div class="col-auto">
+      <button class="btn btn-outline-danger btn-sm w-100 mb-2">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+      <button class="btn btn-outline-dark btn-sm w-100" (click)="showDetailLayer = !showDetailLayer">
+        <i class="fa-solid fa-caret-down"></i>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="showDetailLayer" class="row">
+    <div class="bg-light bg-opacity-50 py-3" style="min-height: 10rem">asdf</div>
+  </div>
+</form>

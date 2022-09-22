@@ -12,4 +12,9 @@ export class Constants {
     { key: 'blue', value: 'Blue' },
     { key: 'red', value: 'Red' },
   ];
+
+  static Sides: SingleSelectOption[] = <SingleSelectOption[]>[
+    { key: 'buy', value: 'buy' },
+    { key: 'sell', value: 'sell' },
+  ];
 }
