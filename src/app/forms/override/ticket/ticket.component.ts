@@ -66,7 +66,7 @@ export class TicketComponent implements OnInit {
   }
 
   onDuplicate(id: number) {
-    const idx: number = this.orders.value.findIndex((order) => order.id === id);
+    const idx: number = this.orders.controls.findIndex((order) => order.get('id')?.value === id);
     const order: FormGroup = this.orders.at(idx);
     const copy = OrderComponent.generateOrderForm({
       account: order.get('account')?.value,

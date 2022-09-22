@@ -49,7 +49,7 @@ export class OrderComponent implements OnInit {
     side: 'buy' | 'sell' | undefined;
   }) {
     return new FormGroup({
-      id: new FormControl(Date.now()),
+      id: new FormControl(Math.floor(Math.random() * 1000)),
       cusip: new FormControl(defaultValue.cusip),
       account: new FormControl(defaultValue.account),
       side: new FormControl(defaultValue.side === undefined ? 'buy' : defaultValue.side),
