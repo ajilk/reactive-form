@@ -50,6 +50,13 @@ export class TicketComponent implements OnInit {
     this.batchAccountValue = '';
   }
 
+  setAccount() {
+    this.orders.controls.forEach((order) => {
+      order.get('account')?.setValue(this.batchAccountValue);
+    });
+    this.account = this.batchAccountValue
+  }
+
   overrideCusip() {
     if (this.checkedOrders.size > 0) {
       this.orders.controls.forEach((order) => {
